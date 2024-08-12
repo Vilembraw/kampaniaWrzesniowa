@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.Segment.getProstopadly;
+
 public class Main {
     public static void main(String[] args) {
         Point point1 = new Point(150,150);
@@ -8,17 +10,12 @@ public class Main {
         System.out.println(line.getLength());
         System.out.println(line.toSvg());
 
-        Segment prostLine = getProstopadly(point1,line);
-        System.out.println(prostLine.getLength());
-        System.out.println(prostLine.toSvg());
+        Segment[] prostLine = getProstopadly(point1,line);
+        System.out.println(prostLine[0].toSvg());
+        System.out.println(prostLine[1].toSvg());
+
+
 
     }
-    public static Segment getProstopadly(Point point, Segment line){
-        int dx = line.getEnd().x - line.getStart().x ;
-        int dy = line.getEnd().y - line.getStart().y;
 
-
-        Segment newLine = new Segment(point,new Point(point.x - dy, point.y + dx));
-        return newLine;
-    }
 }

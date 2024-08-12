@@ -51,4 +51,17 @@ public class Segment {
         sb.append("</svg>");
         return sb.toString();
     }
+
+
+    public static Segment[] getProstopadly(Point point, Segment line){
+        int dx = line.getEnd().x - line.getStart().x ;
+        int dy = line.getEnd().y - line.getStart().y;
+
+
+
+        return new Segment[]{
+                new Segment(point,new Point(point.x - dy, point.y + dx)),
+                new Segment(point,new Point(point.x + dy, point.y - dx))
+        };
+    }
 }
