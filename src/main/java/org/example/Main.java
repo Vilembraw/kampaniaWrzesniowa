@@ -14,8 +14,10 @@ public class Main {
         System.out.println(prostLine[0].toSvg());
         System.out.println(prostLine[1].toSvg());
 
+        Point[] kwardratPoints = {new Point(100,100),new Point(200,100),new Point(200,200),new Point(100,200)} ;
+        Polygon kwadratPolygon = new Polygon(kwardratPoints);
 
-
+        System.out.println(kwadratPolygon.toSvg());
     }
 
 }
