@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SvgScene {
-    private ArrayList<Polygon> polygones = new ArrayList<>();
+    private ArrayList<Shape> shapes = new ArrayList<>();
 
     public void addPolygon(Polygon polygon){
-        polygones.add(polygon);
+        shapes.add(polygon);
     }
     public void save(String path){
         try {
@@ -16,7 +16,7 @@ public class SvgScene {
             fileWriter.write("<HTML>");
             fileWriter.write("<body>");
             fileWriter.write("<svg height=\"200\" width=\"300\" xmlns=\"http://www.w3.org/2000/svg\">");
-            for(Polygon polygon : polygones)
+            for(Shape polygon : shapes)
                 fileWriter.write("\t" + polygon.toSvg() + "\n");
             fileWriter.write("</svg>");
             fileWriter.write("</body>");

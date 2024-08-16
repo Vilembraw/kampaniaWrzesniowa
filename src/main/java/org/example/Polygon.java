@@ -2,17 +2,17 @@ package org.example;
 
 import static org.example.Segment.getProstopadly;
 
-public class Polygon {
+public class Polygon extends Shape {
     private Point[] points;
-    private Style style;
+
     public Polygon(Point[] points, Style style) {
+        super(style);
         this.points = points;
-        this.style = style;
+
     }
 
     public Polygon(Point[] points) {
         this.points = points;
-        this.style = new Style("transparent","black",1);
     }
 
 
