@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.Segment.getProstopadly;
+
 public class Polygon {
     private Point[] points;
     private Style style;
@@ -31,6 +33,18 @@ public class Polygon {
         return sb.toString();
     }
 
+    public static Polygon square(Segment line, Style style){
+        double middle = line.getLength() / 2;
+        Point middlePoints = new Point((line.getEnd().x + line.getStart().x)/2,(line.getEnd().y + line.getStart().y)/2);
+        Segment newLine = new Segment(middlePoints,line.getEnd());
+        Segment[] prostLine = getProstopadly(middlePoints,newLine);
+        Point point1 = prostLine[0].getEnd();
+        Point point2 = prostLine[1].getEnd();
+
+        Point[] squarePoints = {point1,line.getEnd(),point2, line.getStart()};
+        return new Polygon(squarePoints, style);
+
+    }
 
 
 

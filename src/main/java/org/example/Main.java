@@ -4,9 +4,9 @@ import static org.example.Segment.getProstopadly;
 
 public class Main {
     public static void main(String[] args) {
-//        Point point1 = new Point(150,150);
-//        Point point2 = new Point(300,200);
-//        Segment line = new Segment(point1,point2);
+        Point point1 = new Point(100,100);
+        Point point2 = new Point(50,150);
+        Segment line = new Segment(point1,point2);
 //        System.out.println(line.getLength());
 //        System.out.println(line.toSvg());
 
@@ -22,6 +22,12 @@ public class Main {
         scene.addPolygon(kwadratPolygon);
         scene.save("scene.html");
 //        System.out.println(kwadratPolygon.toSvg());
+
+
+        Style style = new Style("purple","black",1);
+        Polygon square = Polygon.square(line, style);
+        scene.addPolygon(square);
+        scene.save("scene1.html");
     }
 
 }
