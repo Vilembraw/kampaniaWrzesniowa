@@ -1,27 +1,27 @@
 package org.example;
 
 public class Segment {
-    private Point start;
-    private Point end;
+    private Vec2 start;
+    private Vec2 end;
 
-    public Point getStart() {
+    public Vec2 getStart() {
         return start;
     }
 
-//    public void setPoint1(Point point1) {
+//    public void setPoint1(Vec2 point1) {
 //        this.point1 = point1;
 //    }
 
-    public Point getEnd() {
+    public Vec2 getEnd() {
         return end;
     }
 
-//    public void setPoint2(Point point2) {
+//    public void setPoint2(Vec2 point2) {
 //        this.point2 = point2;
 //    }
 
 
-    public Segment(Point start, Point end) {
+    public Segment(Vec2 start, Vec2 end) {
         this.start = start;
         this.end = end;
     }
@@ -53,15 +53,15 @@ public class Segment {
     }
 
 
-    public static Segment[] getProstopadly(Point point, Segment line){
+    public static Segment[] getProstopadly(Vec2 vec2, Segment line){
         int dx = line.getEnd().x - line.getStart().x ;
         int dy = line.getEnd().y - line.getStart().y;
 
 
 
         return new Segment[]{
-                new Segment(point,new Point(point.x - dy, point.y + dx)),
-                new Segment(point,new Point(point.x + dy, point.y - dx))
+                new Segment(vec2,new Vec2(vec2.x - dy, vec2.y + dx)),
+                new Segment(vec2,new Vec2(vec2.x + dy, vec2.y - dx))
         };
     }
 }
