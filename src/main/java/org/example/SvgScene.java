@@ -17,7 +17,7 @@ public class SvgScene {
             fileWriter.write("<body>");
             fileWriter.write("<svg height=\"2000\" width=\"3000\" xmlns=\"http://www.w3.org/2000/svg\">");
             for(Shape polygon : shapes)
-                fileWriter.write("\t" + polygon.toSvg() + "\n");
+                fileWriter.write("\t" + polygon.toSvg("") + "\n");
             fileWriter.write("</svg>");
             fileWriter.write("</body>");
             fileWriter.write("</HTML>");

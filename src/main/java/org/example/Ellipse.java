@@ -1,6 +1,6 @@
 package org.example;
 
-public class Ellipse extends Shape{
+public class Ellipse implements Shape{
     private Vec2 center;
     private double rx;
     private double ry;
@@ -13,10 +13,10 @@ public class Ellipse extends Shape{
     }
 
 
-    @Override
-    public String toSvg() {
-        return this.toSvg("");
-    }
+//    @Override
+//    public String toSvg() {
+//        return this.toSvg("");
+//    }
 
     @Override
     public String toSvg(String parametr) {
@@ -25,9 +25,9 @@ public class Ellipse extends Shape{
                 "cx=\""+center.x+"\"" +
                 " cy=\""+center.y+"\"" +
                 " rx=\""+rx+"\"" +
-                " ry=\""+ry+"\"" +
+                " ry=\""+ry+"\" " +
                 parametr +
-                " />");
+                " /> ");
         return sb.toString();
     }
 }

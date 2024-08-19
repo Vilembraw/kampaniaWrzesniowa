@@ -1,9 +1,9 @@
 package org.example;
 
-public abstract class Shape {
+public interface Shape {
 
 
-    public abstract String toSvg();
+//    String toSvg();
 
-    public abstract String toSvg(String parametr);
+    String toSvg(String parametr);
 }

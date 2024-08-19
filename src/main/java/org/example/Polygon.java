@@ -2,7 +2,7 @@ package org.example;
 
 import static org.example.Segment.getProstopadly;
 
-public class Polygon extends Shape {
+public class Polygon implements Shape {
     private Vec2[] points;
 
 
@@ -11,10 +11,10 @@ public class Polygon extends Shape {
         this.points = points;
     }
 
-    @Override
-    public String toSvg() {
-        return this.toSvg("");
-    }
+//    @Override
+//    public String toSvg() {
+//        return this.toSvg("");
+//    }
 
     public String toSvg(String parametr){
         StringBuilder sb = new StringBuilder();

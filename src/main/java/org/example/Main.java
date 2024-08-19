@@ -37,17 +37,36 @@ public class Main {
 //        scene.save("sceneE.html");
 
 
-        SolidFieldPolygon poly = new SolidFieldPolygon(new Vec2[]{
+//        SolidFieldPolygon poly = new SolidFieldPolygon(new Vec2[]{
+//                new Vec2(30, 70),
+//                new Vec2(60, 80),
+//                new Vec2(50, 40)
+//
+//        }, "green");
+//
+//        SolidFieldEllipse ellipse = new SolidFieldEllipse(new Vec2(300,300),100,50,"red");
+//        SvgScene scene = new SvgScene();
+//        scene.addPolygon(poly);
+//        scene.addPolygon(ellipse);
+//        scene.save("scene1.html");
+
+
+                Polygon polygon = new Polygon(new Vec2[]{
                 new Vec2(30, 70),
                 new Vec2(60, 80),
                 new Vec2(50, 40)
 
-        }, "green");
+        });
 
-        SolidFieldEllipse ellipse = new SolidFieldEllipse(new Vec2(300,300),100,50,"red");
+
+        Shape poly = new SolidFillShapeDecorator(polygon,"purple");
+
+        Ellipse elipse = new Ellipse(new Vec2(300,300),100,50);
+        Shape eli = new SolidFillShapeDecorator(elipse,"yellow");
         SvgScene scene = new SvgScene();
         scene.addPolygon(poly);
-        scene.addPolygon(ellipse);
-        scene.save("scene1.html");
+        scene.addPolygon(eli);
+        scene.save("scene2.html");
+
     }
 }
