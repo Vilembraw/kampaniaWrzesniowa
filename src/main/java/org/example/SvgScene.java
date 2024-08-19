@@ -39,6 +39,7 @@ public class SvgScene {
             for(String d : defs){
                 fileWriter.write("\t" + d + "\n");
             }
+
             fileWriter.write("</defs>");
             fileWriter.write("</svg>");
             fileWriter.write("</body>");

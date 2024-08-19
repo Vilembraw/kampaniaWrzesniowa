@@ -69,8 +69,8 @@ public class Main {
                 .build(eli);
         eli = new DropShadowDecorator(eli);
 
-        Ellipse elipse1 = new Ellipse(new Vec2(500,500),90,50);
-        Shape eli1 = new StrokeShapeDecorator(elipse1,"red",20);
+//        Ellipse elipse1 = new Ellipse(new Vec2(500,500),90,50);
+//        Shape eli1 = new StrokeShapeDecorator(elipse1,"red",20);
 
 
         TransformationDecorator.Builder builder = new TransformationDecorator.Builder();
@@ -82,12 +82,21 @@ public class Main {
         Shape s1 = new SolidFillShapeDecorator(s,"green");
 
 
+        GradientFillShapeDecorator builderG = new GradientFillShapeDecorator.Builder()
+                .addStop(0, "red")
+                .addStop(0.3, "white")
+                .addStop(1, "cyan")
+                .build(new Polygon(new Vec2[]{
+                        new Vec2(30, 70),
+                        new Vec2(60, 80),
+                        new Vec2(50, 40)
+                }));
+
+
+
         SvgScene scene = SvgScene.getInstance();
-        scene.addPolygon(poly);
-        scene.addPolygon(eli);
-        scene.addPolygon(eli1);
-        scene.addPolygon(s1);
-        scene.save("scene5.html");
+        scene.addPolygon(builderG);
+        scene.save("scene6.html");
 
 
 
