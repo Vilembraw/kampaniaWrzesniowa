@@ -63,9 +63,13 @@ public class Main {
 
         Ellipse elipse = new Ellipse(new Vec2(300,300),100,50);
         Shape eli = new SolidFillShapeDecorator(elipse,"yellow");
+
+        Ellipse elipse1 = new Ellipse(new Vec2(500,500),90,50);
+        Shape eli1 = new StrokeShapeDecorator(elipse1,"red",20);
         SvgScene scene = new SvgScene();
         scene.addPolygon(poly);
         scene.addPolygon(eli);
+        scene.addPolygon(eli1);
         scene.save("scene2.html");
 
     }

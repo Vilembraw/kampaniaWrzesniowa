@@ -1,6 +1,6 @@
 package org.example;
 
-public class ShapeDecorator implements Shape{
+public abstract class ShapeDecorator implements Shape{
     private Shape decoratedShape;
 
     public ShapeDecorator(Shape decoratedShape) {
@@ -16,4 +16,5 @@ public class ShapeDecorator implements Shape{
     public String toSvg(String parametr) {
         return this.decoratedShape.toSvg(parametr);
     }
+
 }
