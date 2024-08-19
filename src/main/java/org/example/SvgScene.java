@@ -6,6 +6,14 @@ import java.util.ArrayList;
 
 public class SvgScene {
     private ArrayList<Shape> shapes = new ArrayList<>();
+    private static SvgScene instance = null;
+
+    public static SvgScene getInstance() {
+        if(instance == null){
+            instance = new SvgScene();
+        }
+        return instance;
+    }
 
     public void addPolygon(Shape polygon){
         shapes.add(polygon);
