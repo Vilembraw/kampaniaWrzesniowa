@@ -10,16 +10,28 @@ import java.util.ArrayList;
 
 public class Person {
     String name;
-    LocalDate brithDate;
+    LocalDate birthDate;
     LocalDate deathDate;
 
-//    Person mother;
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public LocalDate getDeathDate() {
+        return deathDate;
+    }
+
+    //    Person mother;
 //    Person father;
 
 
-    public Person(String name, LocalDate brithDate, LocalDate deathDate) {
+    public Person(String name, LocalDate birthDate, LocalDate deathDate) {
         this.name = name;
-        this.brithDate = brithDate;
+        this.birthDate = birthDate;
         this.deathDate = deathDate;
     }
 
@@ -46,7 +58,15 @@ public class Person {
                 String line;
                 bufferedReader.readLine(); //header line
                 while((line = bufferedReader.readLine()) != null){
-                    people.add(Person.fromCsvLine(line));
+//                    people.add(Person.fromCsvLine(line));
+                    Person person = Person.fromCsvLine(line);
+                    try {
+                        person.validateLifespan();
+                        people.add(person);
+                    } catch (NegativeLifespanException e) {
+                        System.err.println(e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
                 bufferedReader.close();
                 return people;
@@ -57,5 +77,11 @@ public class Person {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private void validateLifespan() throws NegativeLifespanException {
+        if(deathDate != null && deathDate.isBefore(birthDate)){
+            throw new NegativeLifespanException(this);
+        }
     }
 }
