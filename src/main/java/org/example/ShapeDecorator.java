@@ -1,7 +1,7 @@
 package org.example;
 
 public abstract class ShapeDecorator implements Shape{
-    private Shape decoratedShape;
+    public Shape decoratedShape;
 
     public ShapeDecorator(Shape decoratedShape) {
         this.decoratedShape = decoratedShape;

@@ -76,12 +76,12 @@ public class Main {
         Shape s1 = new SolidFillShapeDecorator(s,"green");
 
 
-        SvgScene scene = new SvgScene();
+        SvgScene scene = SvgScene.getInstance();
         scene.addPolygon(poly);
         scene.addPolygon(eli);
         scene.addPolygon(eli1);
         scene.addPolygon(s1);
-        scene.save("scene4.html");
+        scene.save("scene5.html");
 
 
 

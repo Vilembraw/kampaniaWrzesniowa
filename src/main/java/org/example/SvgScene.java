@@ -5,8 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SvgScene {
+    private static int index = 0;
     private ArrayList<Shape> shapes = new ArrayList<>();
     private static SvgScene instance = null;
+    private ArrayList<String> defs = new ArrayList<>();
+
+
+    public int addFilter(String filter){
+        defs.add(index,filter);
+        return index;
+    }
+
 
     public static SvgScene getInstance() {
         if(instance == null){
@@ -26,6 +35,9 @@ public class SvgScene {
             fileWriter.write("<svg height=\"2000\" width=\"3000\" xmlns=\"http://www.w3.org/2000/svg\">");
             for(Shape polygon : shapes)
                 fileWriter.write("\t" + polygon.toSvg("") + "\n");
+            fileWriter.write("<defs>");
+//            for(String d : defs)
+            fileWriter.write("</defs>");
             fileWriter.write("</svg>");
             fileWriter.write("</body>");
             fileWriter.write("</HTML>");
