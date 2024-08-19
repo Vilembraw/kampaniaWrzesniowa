@@ -1,9 +1,6 @@
 package pers;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -159,6 +156,44 @@ public class Person {
             if(person.getName().equals(getName())){
                 throw new AmbiguousPersonException(person);
             }
+        }
+    }
+
+    public static void toBinaryFile(String path){
+        File file = new File("out.bin");
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            DataOutputStream dos = new DataOutputStream(fos);
+            for (int i = 0; i < people.size(); i++)
+                dos.writeUTF(people.get(i).getName());
+            fos.close();
+            dos.close();
+        } catch (IOException e) {
+            System.err.println("Cannot access: ");
+        }
+    }
+
+    public static void fromBinaryFile(String path){
+        File file = new File("out.bin");
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            DataInputStream dis = new DataInputStream(fis);
+            int size = (int) (file.length() / Integer.BYTES);
+            String[] data = new String[size];
+//            for (int i = 0; i < size; i++)
+//                data[i] = dis.readUTF();
+//            for(String value: data)
+//                System.out.println(value);
+
+            while (dis.available() > 0) { // Continue reading until the end of the file
+                String name = dis.readUTF(); // Read each name as a UTF string
+                System.out.println(name);
+            }
+
+            fis.close();
+            dis.close();
+        } catch (IOException e) {
+            System.err.println("Cannot access: ");
         }
     }
 }
