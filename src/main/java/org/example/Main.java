@@ -43,8 +43,11 @@ public class Main {
                 new Vec2(50, 40)
 
         }, "green");
+
+        SolidFieldEllipse ellipse = new SolidFieldEllipse(new Vec2(300,300),100,50,"red");
         SvgScene scene = new SvgScene();
         scene.addPolygon(poly);
+        scene.addPolygon(ellipse);
         scene.save("scene1.html");
     }
 }

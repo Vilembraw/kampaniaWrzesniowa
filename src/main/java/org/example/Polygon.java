@@ -29,7 +29,7 @@ public class Polygon extends Shape {
         sb.append(parametr);
 //        sb.append(style.toSvg());
 //        sb.append("style=\"fill:lime;stroke:purple;stroke-width:3\" />");
-
+        sb.append("/>");
 //        sb.append("</svg>");
         return sb.toString();
     }

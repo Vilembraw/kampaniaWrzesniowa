@@ -1,7 +1,12 @@
 package org.example;
 
-public class SolidFieldPolygon extends Polygon{
+public class SolidFieldEllipse extends Ellipse{
     private String color;
+
+    public SolidFieldEllipse(Vec2 center, double rx, double ry, String color) {
+        super(center, rx, ry);
+        this.color = color;
+    }
 
 
     @Override
@@ -9,10 +14,7 @@ public class SolidFieldPolygon extends Polygon{
         return super.toSvg(String.format("fill=\"%s\" %s ",color,parametr));
     }
 
-    public SolidFieldPolygon(Vec2[] points, String color) {
-        super(points);
-        this.color = color;
-    }
+
 
 
 }

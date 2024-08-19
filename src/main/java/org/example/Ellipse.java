@@ -5,7 +5,7 @@ public class Ellipse extends Shape{
     private double rx;
     private double ry;
 
-    public Ellipse(Style style, Vec2 center, double rx, double ry) {
+    public Ellipse(Vec2 center, double rx, double ry) {
 //        super(style);
         this.center = center;
         this.rx = rx;
