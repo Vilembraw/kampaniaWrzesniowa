@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Person {
     String name;
@@ -71,8 +72,24 @@ public class Person {
             {
                 parents.add(father);
             }
+
         }
-        return new Person (parts[0],birthDate,deathDate,parents);
+
+//        return new Person (parts[0],birthDate,deathDate,parents);
+        Person person = new Person (parts[0],birthDate,deathDate,parents);
+        try {
+            person.validateParentAge();
+        } catch (ParentingAgeException e) {
+            System.err.println(e.getMessage());
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Do you want to proceed with this case? (Y/N): ");
+            String userInput = scanner.nextLine();
+            if (!userInput.equalsIgnoreCase("Y")) {
+                System.out.println("Person not added.");
+                return null;
+            }
+        }
+        return person;
     }
 
     public static ArrayList<Person> fromCsv(String path){
@@ -114,6 +131,22 @@ public class Person {
         return null;
     }
 
+    public int getAge() {
+        if (birthDate == null){
+            return -1;
+        }
+        LocalDate currentDate = LocalDate.now();
+        return currentDate.minusYears(birthDate.getYear()).getYear();
+    }
+
+    private void validateParentAge() throws ParentingAgeException {
+        int len = parents.size();
+        for(int i = 0; i < len; i++){
+            if(parents.get(i).getAge() < this.getAge() || parents.get(i).getAge() < 15){
+                throw new ParentingAgeException(this);
+            }
+        }
+    }
 
     private void validateLifespan() throws NegativeLifespanException {
         if(deathDate != null && deathDate.isBefore(birthDate)){
