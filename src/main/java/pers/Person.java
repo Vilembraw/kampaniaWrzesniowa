@@ -13,6 +13,9 @@ public class Person {
     LocalDate birthDate;
     LocalDate deathDate;
 
+    ArrayList<Person> parents = new ArrayList<>();
+    static ArrayList<Person> people = new ArrayList<>();
+
     public String getName() {
         return name;
     }
@@ -29,10 +32,17 @@ public class Person {
 //    Person father;
 
 
-    public Person(String name, LocalDate birthDate, LocalDate deathDate) {
+    public ArrayList<Person> getParents() {
+        return parents;
+    }
+
+
+
+    public Person(String name, LocalDate birthDate, LocalDate deathDate, ArrayList<Person> parents) {
         this.name = name;
         this.birthDate = birthDate;
         this.deathDate = deathDate;
+        this.parents = parents;
     }
 
 
@@ -47,13 +57,28 @@ public class Person {
         else{
             deathDate = null;
         }
-        return new Person (parts[0],birthDate,deathDate);
+        ArrayList<Person> parents = new ArrayList<>();
+        if(!parts[3].equals("")){
+            Person mother = findPerson(parts[3].trim());
+            if(mother != null)
+            {
+                parents.add(mother);
+            }
+        }
+        if(!parts[4].equals("")){
+            Person father = findPerson(parts[4].trim());
+            if(father != null)
+            {
+                parents.add(father);
+            }
+        }
+        return new Person (parts[0],birthDate,deathDate,parents);
     }
 
     public static ArrayList<Person> fromCsv(String path){
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
-            ArrayList<Person> people = new ArrayList<>();
+
             try {
                 String line;
                 bufferedReader.readLine(); //header line
@@ -79,6 +104,16 @@ public class Person {
         }
 
     }
+
+    public static Person findPerson(String name){
+        for(Person p: people){
+            if(p.getName().equals(name)){
+                return p;
+            }
+        }
+        return null;
+    }
+
 
     private void validateLifespan() throws NegativeLifespanException {
         if(deathDate != null && deathDate.isBefore(birthDate)){
