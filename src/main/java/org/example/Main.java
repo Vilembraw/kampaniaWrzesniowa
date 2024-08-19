@@ -66,11 +66,24 @@ public class Main {
 
         Ellipse elipse1 = new Ellipse(new Vec2(500,500),90,50);
         Shape eli1 = new StrokeShapeDecorator(elipse1,"red",20);
+
+        TransformationDecorator.Builder builder = new TransformationDecorator.Builder();
+        Shape s = builder
+                .rotate(-50, new Vec2(0, 0))
+                .translate(new Vec2(50, 60))
+                .scale(new Vec2(1, 3))
+                .build(new Ellipse(new Vec2(100, 100), 20, 40));
+        Shape s1 = new SolidFillShapeDecorator(s,"green");
+
+
         SvgScene scene = new SvgScene();
         scene.addPolygon(poly);
         scene.addPolygon(eli);
         scene.addPolygon(eli1);
-        scene.save("scene2.html");
+        scene.addPolygon(s1);
+        scene.save("scene4.html");
+
+
 
     }
 }
