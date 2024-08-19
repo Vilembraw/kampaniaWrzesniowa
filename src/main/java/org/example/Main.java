@@ -62,10 +62,16 @@ public class Main {
         Shape poly = new SolidFillShapeDecorator(polygon,"purple");
 
         Ellipse elipse = new Ellipse(new Vec2(300,300),100,50);
-        Shape eli = new SolidFillShapeDecorator(elipse,"yellow");
+        Shape eli = new SolidFillShapeDecorator(elipse,"red");
+        eli = new TransformationDecorator.Builder()
+                .translate(new Vec2(50, 60))
+                .scale(new Vec2(2,2))
+                .build(eli);
+        eli = new DropShadowDecorator(eli);
 
         Ellipse elipse1 = new Ellipse(new Vec2(500,500),90,50);
         Shape eli1 = new StrokeShapeDecorator(elipse1,"red",20);
+
 
         TransformationDecorator.Builder builder = new TransformationDecorator.Builder();
         Shape s = builder

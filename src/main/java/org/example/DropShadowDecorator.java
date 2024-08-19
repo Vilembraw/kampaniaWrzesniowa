@@ -4,7 +4,7 @@ public class DropShadowDecorator extends ShapeDecorator{
     private int index;
 
 
-    public DropShadowDecorator(Shape decoratedShape, int index) {
+    public DropShadowDecorator(Shape decoratedShape) {
         super(decoratedShape);
         this.index = SvgScene.getInstance().addFilter(
                 "\t<filter id=\"f%d\" x=\"-100%%\" y=\"-100%%\" width=\"300%%\" height=\"300%%\">\n" +

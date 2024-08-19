@@ -36,7 +36,9 @@ public class SvgScene {
             for(Shape polygon : shapes)
                 fileWriter.write("\t" + polygon.toSvg("") + "\n");
             fileWriter.write("<defs>");
-//            for(String d : defs)
+            for(String d : defs){
+                fileWriter.write("\t" + d + "\n");
+            }
             fileWriter.write("</defs>");
             fileWriter.write("</svg>");
             fileWriter.write("</body>");
