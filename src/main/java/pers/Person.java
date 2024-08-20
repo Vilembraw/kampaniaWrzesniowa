@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Function;
 
 public class Person {
     String name;
@@ -195,5 +196,22 @@ public class Person {
         } catch (IOException e) {
             System.err.println("Cannot access: ");
         }
+    }
+
+
+    public String generateTree(){
+        String result="@startuml\n%s\n%s\n@enduml";
+        Function<Person,String> objectName = person -> person.getName().replaceAll(" ","");
+        Function<Person,String> objectLine = person -> String.format("object \"%s\" as %s",person.getName(),objectName.apply(person));
+
+         StringBuilder objects=new StringBuilder();
+        StringBuilder relations=new StringBuilder();
+        objects.append(objectLine.apply(this)).append("\n");
+        parents.forEach(parent->{
+            objects.append(objectLine.apply(parent)).append("\n");
+            relations.append(String.format("%s <-- %s\n",objectName.apply(parent),objectName.apply(this)));
+        });
+        result=String.format(result,objects,relations);
+        return result;
     }
 }
