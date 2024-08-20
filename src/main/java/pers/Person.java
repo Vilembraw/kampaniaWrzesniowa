@@ -4,7 +4,10 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class Person {
@@ -214,4 +217,29 @@ public class Person {
         result=String.format(result,objects,relations);
         return result;
     }
+
+
+    public static String generateTree(ArrayList<Person> people){
+        String result="@startuml\n%s\n%s\n@enduml";
+        Function<Person,String> objectName = person -> person.getName().replaceAll(" ","");
+        Function<Person,String> objectLine = person -> String.format("object \"%s\" as %s",person.getName(),objectName.apply(person));
+
+        Set<String> objects= new HashSet<>();
+        Set<String> relations= new HashSet<>();
+
+        Consumer<Person> addPerson = person -> {
+            objects.add(objectLine.apply(person));
+            for (Person parent : person.parents)
+                relations.add(objectName.apply(parent) + "<--" + objectName.apply(person));
+        };
+
+
+        people.forEach(addPerson);
+        String objectString = String.join("\n", objects);
+        String relationString = String.join("\n", relations);
+
+        return String.format(result, objectString, relationString);
+    }
+
+
 }

@@ -43,10 +43,15 @@ public class Main {
 //        );
 
         ArrayList<Person> people = Person.fromCsv("family.csv");
-        for(Person person : people){
-            //System.out.println(person.generateTree());
-            PlantUMLRunner.generate(person.generateTree(),"image_output", person.getName());
-        }
+//        for(Person person : people){
+//            //System.out.println(person.generateTree());
+//            PlantUMLRunner.generate(person.generateTree(),"image_output", person.getName());
+//        }
 
+
+        PlantUMLRunner.generate(
+                Person.generateTree(people),
+                "image_output", "all"
+        );
     }
 }
