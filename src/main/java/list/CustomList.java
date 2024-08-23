@@ -3,6 +3,7 @@ package list;
 
 import java.util.AbstractList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 public class CustomList<T> extends AbstractList<T> {
@@ -145,5 +146,17 @@ public class CustomList<T> extends AbstractList<T> {
             builder.accept(i);
         }
         return builder.build();
+    }
+
+
+    @Override
+    public boolean add(T t) {
+        this.addLast(t);
+        return true;
+    }
+
+
+    public static <S> List<S> filterByClass(List<S> list, Class<?> cls){
+        return list.stream().filter(cls::isInstance).toList();
     }
 }
