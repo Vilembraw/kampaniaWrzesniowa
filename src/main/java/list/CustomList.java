@@ -54,6 +54,7 @@ public class CustomList<T> extends AbstractList<T> {
             tail.next = new Node(value);
             tail = tail.next;
         }
+        size++;
     }
 
 
@@ -73,6 +74,7 @@ public class CustomList<T> extends AbstractList<T> {
             newHead.next = head;
             head = newHead;
         }
+        size++;
     }
 
     public T getFirst(){
@@ -86,8 +88,10 @@ public class CustomList<T> extends AbstractList<T> {
         if(head == null){
             throw new NoSuchElementException("List is empty");
         }
+
         Node temp = head;
         head = head.next;
+        size--;
         return temp.value;
     }
 
@@ -108,7 +112,7 @@ public class CustomList<T> extends AbstractList<T> {
             tail = temp;
             Node tempVal = temp.next;
             temp.next = null;
-
+            size--;
             return tempVal.value;
         }
 
