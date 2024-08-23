@@ -2,8 +2,9 @@ package list;
 
 
 import java.util.AbstractList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
-
+import java.util.stream.Stream;
 public class CustomList<T> extends AbstractList<T> {
     private class Node {
         public Node next;
@@ -116,5 +117,33 @@ public class CustomList<T> extends AbstractList<T> {
             return tempVal.value;
         }
 
+    }
+
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            Node n = head;
+            @Override
+            public boolean hasNext() {
+                return n != null;
+            }
+
+            @Override
+            public T next() {
+                T result = n.value;
+                n = n.next;
+                return result;
+            }
+        };
+    }
+
+    @Override
+    public Stream<T> stream(){
+        Stream.Builder<T> builder = Stream.builder();
+        for(T i : this){
+            builder.accept(i);
+        }
+        return builder.build();
     }
 }
