@@ -1,9 +1,10 @@
 package list;
 
 
+import java.util.AbstractList;
 import java.util.NoSuchElementException;
 
-public class CustomList<T> {
+public class CustomList<T> extends AbstractList<T> {
     private class Node {
         public Node next;
         public T value;
@@ -15,10 +16,33 @@ public class CustomList<T> {
     }
 
     private Node head, tail;
+    private int size = 0;
+
+
+
+
+
 
     public CustomList(){
         this.head = null;
         this.tail = null;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public T get(int index) {
+        Node temp = head;
+        for(int i = 0; i < index; i++){
+            temp = temp.next;
+            if(temp == null){
+                throw new NoSuchElementException("index is out of bounds");
+            }
+        }
+        return temp.value;
     }
 
     public void addLast(T value){
