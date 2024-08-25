@@ -25,7 +25,7 @@ public class Main {
 
 
 
-        LocalTime test = LocalTime.of(12,0,0);
+        LocalTime test = LocalTime.of(12,23,53);
         DigitalClock clock = new DigitalClock(test,cityMap.get("Lublin"),DWUDZIESTO);
         System.out.println(clock.toString());
         City cityLub = cityMap.get("Lublin");
@@ -48,5 +48,10 @@ public class Main {
 //        }
         AnalogClock ag = new AnalogClock(test,cityLub);
         ag.toSvg("zegar.html");
+        SecondHand sc = new SecondHand();
+        sc.setTime(test);
+        System.out.println(sc.toSvg());
+
+
     }
 }
