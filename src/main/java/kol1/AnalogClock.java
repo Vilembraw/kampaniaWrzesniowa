@@ -22,7 +22,7 @@ public class AnalogClock extends Clock{
                 new SecondHand()
         );
 
-        redoHands();
+        updateDisplay();
     }
 
     public void redoHands(){
@@ -33,28 +33,33 @@ public class AnalogClock extends Clock{
         }
 
     }
-    @Override
-    public void setCity(City cityT) {
-
-        double temp = cityT.getStrefa() - this.city.getStrefa();
-//        System.out.println(cityT.getStolica());
-//        System.out.println(this.city.getStolica());
-//        System.out.println(String.format("Roznica: %f",temp));
-        this.time = time.plusHours((long)temp);
-        this.city = cityT;
-        redoHands();
-    }
 
     @Override
-    public void setCurrentTime(){
-        this.time = LocalTime.now();
+    protected void updateDisplay() {
         redoHands();
     }
-    @Override
-    public void setTime(int hour, int minutes, int secs){
-        this.time = LocalTime.of(hour,minutes,secs);
-        redoHands();
-    }
+//    @Override
+//    public void setCity(City cityT) {
+//
+//        double temp = cityT.getStrefa() - this.city.getStrefa();
+////        System.out.println(cityT.getStolica());
+////        System.out.println(this.city.getStolica());
+////        System.out.println(String.format("Roznica: %f",temp));
+//        this.time = time.plusHours((long)temp);
+//        this.city = cityT;
+//        redoHands();
+//    }
+//
+//    @Override
+//    public void setCurrentTime(){
+//        this.time = LocalTime.now();
+//        redoHands();
+//    }
+//    @Override
+//    public void setTime(int hour, int minutes, int secs){
+//        this.time = LocalTime.of(hour,minutes,secs);
+//        redoHands();
+//    }
 
     public void toSvg(String path){
 

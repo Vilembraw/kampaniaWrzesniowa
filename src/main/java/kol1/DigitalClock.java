@@ -18,6 +18,11 @@ public class DigitalClock extends Clock{
     }
 
     @Override
+    protected void updateDisplay() {
+
+    }
+
+    @Override
     public String toString(){
         if(type == Type.DWUDZIESTO){
             return super.toString();

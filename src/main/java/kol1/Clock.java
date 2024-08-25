@@ -16,9 +16,10 @@ public abstract class Clock {
 //        System.out.println(String.format("Roznica: %f",temp));
         this.time = time.plusHours((long)temp);
         this.city = cityT;
+        updateDisplay();
     }
 
-
+    protected abstract void updateDisplay();
 
     public Clock(LocalTime time, City city) {
         this.time = time;
@@ -27,10 +28,12 @@ public abstract class Clock {
 
     public void setCurrentTime(){
         this.time = LocalTime.now();
+        updateDisplay();
     }
 
     public void setTime(int hour, int minutes, int secs){
         this.time = LocalTime.of(hour,minutes,secs);
+        updateDisplay();
     }
 
     public String toString(){
