@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,4 +71,67 @@ public class City {
         return cityMap;
     }
 
+
+    public LocalTime localMeanTime(LocalTime zgodnyCzas){
+        String dlugoscTemp = getDlugosc().trim();
+        String[] parts = dlugoscTemp.split(" ");
+        System.out.println(parts[0].trim());
+        System.out.println(parts[1].trim());
+        double dlugoscValue = Double.parseDouble(parts[0]);
+        double roznica = dlugoscValue * 4;
+        double minuty = roznica%60;
+        double godziny = (roznica - minuty)/60;
+        double roznicaWSekundach = roznica * 60;
+        double sekundy = roznicaWSekundach % 60;
+        LocalTime meanTime = zgodnyCzas;
+
+//        System.out.println(String.format("g %f \t,m %f \t,s %f \t",godziny,minuty,sekundy));
+
+        if(parts[1].equals("E") ){
+            meanTime = meanTime.plusHours((long)godziny);
+            meanTime = meanTime.plusMinutes((long)minuty);
+            meanTime = meanTime.plusSeconds((long)sekundy);
+//            System.out.println(String.format("g %d \t,m %d \t,s %d \t",(long)godziny,(long)minuty,(long)sekundy));
+
+        }
+
+        if(parts[1].equals("W")){
+            meanTime.minusHours((long)godziny);
+            meanTime.minusMinutes((long)minuty);
+            meanTime.minusSeconds((long)sekundy);
+
+
+
+        }
+        return meanTime;
+    }
+
+//    public static City worstTimezoneFit(City city1, City city2, LocalTime time){
+//        Duration duration1 = Duration.between(city1.localMeanTime(time), time).abs();
+//        Duration duration2 = Duration.between(city2.localMeanTime(time), time).abs();
+//
+//
+//        // Compare the durations
+//        if (duration1.compareTo(duration2) > 0) {
+////            System.out.println("City1's local mean time is further from the reference time.");
+//            return city1;
+//        } else if (duration1.compareTo(duration2) < 0) {
+////            System.out.println("City2's local mean time is further from the reference time.");
+//            return city2;
+//        } else {
+//            System.out.println("Both cities' local mean times are equally distant from the reference time.");
+//            return city1;
+//        }
+//    }
+
+}
+
+class CityComparator {
+    public static Comparator<City> worstTimezoneFitComparator(LocalTime referenceTime) {
+        return (city1, city2) -> {
+            Duration duration1 = Duration.between(city1.localMeanTime(referenceTime), referenceTime).abs();
+            Duration duration2 = Duration.between(city2.localMeanTime(referenceTime), referenceTime).abs();
+            return duration1.compareTo(duration2);
+        };
+    }
 }

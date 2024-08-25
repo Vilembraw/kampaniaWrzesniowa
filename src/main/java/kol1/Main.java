@@ -1,11 +1,11 @@
 package kol1;
 
 import java.time.LocalTime;
-import java.util.Map;
+import java.util.*;
 
 
+import static kol1.CityComparator.worstTimezoneFitComparator;
 import static kol1.DigitalClock.Type.DWUDZIESTO;
-import static kol1.DigitalClock.Type.DWUNASTO;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,17 +19,32 @@ public class Main {
 
         Map<String, City> cityMap = City.parseFile("strefy.csv");
         for (Map.Entry<String, City> line : cityMap.entrySet()) {
-            System.out.println(line.getValue());
+            System.out.println(line.getValue().getStolica());
         }
 
 
-        DigitalClock clock = new DigitalClock(LocalTime.now(),cityMap.get("Warszawa"),DWUDZIESTO);
+
+
+        LocalTime test = LocalTime.of(12,0,0);
+        DigitalClock clock = new DigitalClock(test,cityMap.get("Lublin"),DWUDZIESTO);
         System.out.println(clock.toString());
-        clock.setCity(cityMap.get("Kijów"));
-        System.out.println(clock.toString());
-        clock.setCity(cityMap.get("Warszawa"));
-        System.out.println(clock.toString());
-        clock.setCity(cityMap.get("Vancouver"));
-        System.out.println(clock.toString());
+        City cityLub = cityMap.get("Lublin");
+        System.out.println(cityLub.localMeanTime(test));
+
+        List<City> entryList = new ArrayList<>(cityMap.values());
+
+        // Sort the list using the comparator
+        entryList.sort(worstTimezoneFitComparator(test));
+
+        Map<String, City> sortedMap = new LinkedHashMap<>();
+        for (City entry : entryList) {
+            sortedMap.put(entry.getStolica(), entry);
+        }
+
+        // Print the sorted map
+        System.out.println("Sorted map:");
+        for (Map.Entry<String, City> entry : sortedMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 }
