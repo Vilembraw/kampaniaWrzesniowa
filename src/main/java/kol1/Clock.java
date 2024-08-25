@@ -5,14 +5,15 @@ import java.time.LocalTime;
 public abstract class Clock {
     public LocalTime time;
 
-    private City city;
+    City city;
+
 
     public void setCity(City cityT){
 
         double temp = cityT.getStrefa() - this.city.getStrefa();
-        System.out.println(cityT.getStolica());
-        System.out.println(this.city.getStolica());
-        System.out.println(String.format("Roznica: %f",temp));
+//        System.out.println(cityT.getStolica());
+//        System.out.println(this.city.getStolica());
+//        System.out.println(String.format("Roznica: %f",temp));
         this.time = time.plusHours((long)temp);
         this.city = cityT;
     }

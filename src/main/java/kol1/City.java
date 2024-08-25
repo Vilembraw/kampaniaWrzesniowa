@@ -1,14 +1,12 @@
 package kol1;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class City {
@@ -17,7 +15,7 @@ public class City {
     private String szerokosc;
     private String dlugosc;
 
-    public int cos;
+
 
 
     public String getStolica() {
@@ -75,8 +73,8 @@ public class City {
     public LocalTime localMeanTime(LocalTime zgodnyCzas){
         String dlugoscTemp = getDlugosc().trim();
         String[] parts = dlugoscTemp.split(" ");
-        System.out.println(parts[0].trim());
-        System.out.println(parts[1].trim());
+//        System.out.println(parts[0].trim());
+//        System.out.println(parts[1].trim());
         double dlugoscValue = Double.parseDouble(parts[0]);
         double roznica = dlugoscValue * 4;
         double minuty = roznica%60;
@@ -124,6 +122,20 @@ public class City {
 //        }
 //    }
 
+
+    public static void generateAnalogClocksSvg(List<City> cities, AnalogClock clock){
+        System.out.println(clock.toString());
+        File directory = new File("dupa");
+        City firstCity = clock.city;
+        directory.mkdirs();
+
+        for(City c : cities){
+            clock.setCity(c);
+            String name = directory + "/" + c.getStolica() + ".svg";
+            clock.toSvg(name);
+            clock.setCity(firstCity);
+        }
+    }
 }
 
 class CityComparator {

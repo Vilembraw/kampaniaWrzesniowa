@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 
+import static kol1.City.generateAnalogClocksSvg;
 import static kol1.CityComparator.worstTimezoneFitComparator;
 import static kol1.DigitalClock.Type.DWUDZIESTO;
 
@@ -16,20 +17,22 @@ public class Main {
 //        clock12.setTime(13,0,0);
 //        System.out.println(clock12.toString());
 
-
+        List<City> cities = new ArrayList<>();
         Map<String, City> cityMap = City.parseFile("strefy.csv");
         for (Map.Entry<String, City> line : cityMap.entrySet()) {
-            System.out.println(line.getValue().getStolica());
+            cities.add(line.getValue());
+//            System.out.println(line.getValue().getStolica());
         }
 
+        LocalTime czas = LocalTime.of(12,30,45);
 
-
-
-        LocalTime test = LocalTime.of(12,30,45);
-        DigitalClock clock = new DigitalClock(test,cityMap.get("Lublin"),DWUDZIESTO);
-        System.out.println(clock.toString());
-        City cityLub = cityMap.get("Lublin");
-        System.out.println(cityLub.localMeanTime(test));
+        AnalogClock clockerino = new AnalogClock(czas,cityMap.get("Lublin"));
+        clockerino.toSvg("test1.svg");
+        System.out.println(clockerino.toString());
+        clockerino.setCity(cityMap.get("Nowy Jork"));
+        clockerino.toSvg("test2.svg");
+        System.out.println(clockerino.toString());
+        generateAnalogClocksSvg(cities,clockerino);
 
 //        List<City> entryList = new ArrayList<>(cityMap.values());
 //
@@ -54,7 +57,7 @@ public class Main {
 //        sc.setTime(test);
 //        hh.setTime(test);
 //        mh.setTime(test);
-//
+////
 //        System.out.println(sc.toSvg());
 //        System.out.println(hh.toSvg());
 //        System.out.println(mh.toSvg());
