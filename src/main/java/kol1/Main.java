@@ -25,7 +25,7 @@ public class Main {
 
 
 
-        LocalTime test = LocalTime.of(12,23,53);
+        LocalTime test = LocalTime.of(12,30,45);
         DigitalClock clock = new DigitalClock(test,cityMap.get("Lublin"),DWUDZIESTO);
         System.out.println(clock.toString());
         City cityLub = cityMap.get("Lublin");
@@ -46,18 +46,18 @@ public class Main {
 //        for (Map.Entry<String, City> entry : sortedMap.entrySet()) {
 //            System.out.println(entry.getKey() + ": " + entry.getValue());
 //        }
-        AnalogClock ag = new AnalogClock(test,cityLub);
-        ag.toSvg("zegar.html");
-        SecondHand sc = new SecondHand();
-        HourHand hh = new HourHand();
-        MinuteHand mh = new MinuteHand();
-        sc.setTime(test);
-        hh.setTime(test);
-        mh.setTime(test);
-
-        System.out.println(sc.toSvg());
-        System.out.println(hh.toSvg());
-        System.out.println(mh.toSvg());
+//        AnalogClock ag = new AnalogClock(test,cityLub);
+//        ag.toSvg("zegar.html");
+//        SecondHand sc = new SecondHand();
+//        HourHand hh = new HourHand();
+//        MinuteHand mh = new MinuteHand();
+//        sc.setTime(test);
+//        hh.setTime(test);
+//        mh.setTime(test);
+//
+//        System.out.println(sc.toSvg());
+//        System.out.println(hh.toSvg());
+//        System.out.println(mh.toSvg());
 
 
 

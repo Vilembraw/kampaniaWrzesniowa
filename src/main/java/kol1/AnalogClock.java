@@ -5,11 +5,14 @@ import org.example.Shape;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.List;
 
 public class AnalogClock extends Clock{
+    private final List<ClockHand> hands;
 
-    public AnalogClock(LocalTime time, City city) {
+    public AnalogClock(LocalTime time, City city, List<ClockHand> hands) {
         super(time, city);
+        this.hands = hands;
     }
 
     public void toSvg(String path){
@@ -27,6 +30,11 @@ public class AnalogClock extends Clock{
             fileWriter.write("  <text x=\"0\" y=\"80\" dy=\"6\">6</text>");
             fileWriter.write("  <text x=\"-80\" y=\"0\" dy=\"4\">9</text>");
             fileWriter.write("</g>");
+
+            for(ClockHand c : hands){
+                fileWriter.write(c.toSvg());
+            }
+
             fileWriter.write("</svg>");
             fileWriter.write("</body>");
             fileWriter.write("</HTML>");
