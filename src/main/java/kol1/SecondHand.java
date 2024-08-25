@@ -14,10 +14,10 @@ public class SecondHand extends ClockHand{
     @Override
     public String toSvg() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("  " +
-                "  <!-- Sekundy -->\n" +
-                "  <line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"-80\" stroke=\"red\" stroke-width=\"1\" " +
-                "transform=\"rotate("+this.kat+")\" />");
+        stringBuilder.append(
+                "<!-- Sekundy -->\n" +
+                "<line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"-80\" stroke=\"red\" stroke-width=\"1\" " +
+                "transform=\"rotate("+this.kat+")\" />\n");
         return stringBuilder.toString();
     }
 }

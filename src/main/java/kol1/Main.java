@@ -49,8 +49,16 @@ public class Main {
         AnalogClock ag = new AnalogClock(test,cityLub);
         ag.toSvg("zegar.html");
         SecondHand sc = new SecondHand();
+        HourHand hh = new HourHand();
+        MinuteHand mh = new MinuteHand();
         sc.setTime(test);
+        hh.setTime(test);
+        mh.setTime(test);
+
         System.out.println(sc.toSvg());
+        System.out.println(hh.toSvg());
+        System.out.println(mh.toSvg());
+
 
 
     }
