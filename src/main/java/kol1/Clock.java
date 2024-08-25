@@ -7,11 +7,15 @@ public abstract class Clock {
 
     private City city;
 
-//    public void setCity(City city){
-//        if(city.getStrefa() < 0){
-//            time.minusHours(city.getStrefa())
-//        }
-//    }
+    public void setCity(City cityT){
+
+        double temp = cityT.getStrefa() - this.city.getStrefa();
+        System.out.println(cityT.getStolica());
+        System.out.println(this.city.getStolica());
+        System.out.println(String.format("Roznica: %f",temp));
+        this.time = time.plusHours((long)temp);
+        this.city = cityT;
+    }
 
 
 

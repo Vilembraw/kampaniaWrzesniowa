@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class City {
     private String stolica;
-    private int strefa;
+    private double strefa;
     private String szerokosc;
     private String dlugosc;
 
@@ -20,7 +20,7 @@ public class City {
         return stolica;
     }
 
-    public int getStrefa() {
+    public double getStrefa() {
         return strefa;
     }
 
@@ -32,7 +32,7 @@ public class City {
         return dlugosc;
     }
 
-    public City(String stolica, int strefa, String szerokosc, String dlugosc) {
+    public City(String stolica, double strefa, String szerokosc, String dlugosc) {
         this.stolica = stolica;
         this.strefa = strefa;
         this.szerokosc = szerokosc;
@@ -42,7 +42,7 @@ public class City {
     private static City parseLine(String line){
         String[] parts = line.split(",");
         if(parts.length == 4){
-            int temp = Integer.parseInt(parts[1]);
+            double temp = Double.parseDouble(parts[1].trim());
             return new City(parts[0],temp,parts[2],parts[3]);
         }
         else{

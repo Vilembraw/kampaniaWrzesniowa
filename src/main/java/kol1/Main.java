@@ -16,13 +16,20 @@ public class Main {
 //        clock12.setTime(13,0,0);
 //        System.out.println(clock12.toString());
 
-        LocalTime time = LocalTime.now();
-        time.plusHours(1);
-        System.out.println(time);
 
         Map<String, City> cityMap = City.parseFile("strefy.csv");
         for (Map.Entry<String, City> line : cityMap.entrySet()) {
             System.out.println(line.getValue());
         }
+
+
+        DigitalClock clock = new DigitalClock(LocalTime.now(),cityMap.get("Warszawa"),DWUDZIESTO);
+        System.out.println(clock.toString());
+        clock.setCity(cityMap.get("Kijów"));
+        System.out.println(clock.toString());
+        clock.setCity(cityMap.get("Warszawa"));
+        System.out.println(clock.toString());
+        clock.setCity(cityMap.get("Vancouver"));
+        System.out.println(clock.toString());
     }
 }
