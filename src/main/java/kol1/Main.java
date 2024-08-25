@@ -46,5 +46,7 @@ public class Main {
 //        for (Map.Entry<String, City> entry : sortedMap.entrySet()) {
 //            System.out.println(entry.getKey() + ": " + entry.getValue());
 //        }
+        AnalogClock ag = new AnalogClock(test,cityLub);
+        ag.toSvg("zegar.html");
     }
 }
