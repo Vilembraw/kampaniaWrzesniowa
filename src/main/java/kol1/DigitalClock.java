@@ -1,5 +1,7 @@
 package kol1;
 
+import java.time.LocalTime;
+
 public class DigitalClock extends Clock{
 
     public enum Type{
@@ -10,9 +12,9 @@ public class DigitalClock extends Clock{
 
     public Type type;
 
-    public DigitalClock(Type type){
-       this.type = type;
-       setCurrentTime();
+    public DigitalClock(LocalTime time, City city, Type type) {
+        super(time, city);
+        this.type = type;
     }
 
     @Override

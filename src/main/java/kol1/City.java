@@ -9,16 +9,18 @@ import java.util.Map;
 
 public class City {
     private String stolica;
-    private String strefa;
+    private int strefa;
     private String szerokosc;
     private String dlugosc;
+
+    public int cos;
 
 
     public String getStolica() {
         return stolica;
     }
 
-    public String getStrefa() {
+    public int getStrefa() {
         return strefa;
     }
 
@@ -30,7 +32,7 @@ public class City {
         return dlugosc;
     }
 
-    public City(String stolica, String strefa, String szerokosc, String dlugosc) {
+    public City(String stolica, int strefa, String szerokosc, String dlugosc) {
         this.stolica = stolica;
         this.strefa = strefa;
         this.szerokosc = szerokosc;
@@ -40,7 +42,8 @@ public class City {
     private static City parseLine(String line){
         String[] parts = line.split(",");
         if(parts.length == 4){
-            return new City(parts[0],parts[1],parts[2],parts[3]);
+            int temp = Integer.parseInt(parts[1]);
+            return new City(parts[0],temp,parts[2],parts[3]);
         }
         else{
             throw new IllegalArgumentException("Invalid line format: " + line);

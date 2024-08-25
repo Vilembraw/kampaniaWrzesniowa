@@ -5,6 +5,20 @@ import java.time.LocalTime;
 public abstract class Clock {
     public LocalTime time;
 
+    private City city;
+
+//    public void setCity(City city){
+//        if(city.getStrefa() < 0){
+//            time.minusHours(city.getStrefa())
+//        }
+//    }
+
+
+
+    public Clock(LocalTime time, City city) {
+        this.time = time;
+        this.city = city;
+    }
 
     public void setCurrentTime(){
         this.time = LocalTime.now();
