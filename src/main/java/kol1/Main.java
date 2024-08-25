@@ -31,20 +31,20 @@ public class Main {
         City cityLub = cityMap.get("Lublin");
         System.out.println(cityLub.localMeanTime(test));
 
-        List<City> entryList = new ArrayList<>(cityMap.values());
-
-        // Sort the list using the comparator
-        entryList.sort(worstTimezoneFitComparator(test));
-
-        Map<String, City> sortedMap = new LinkedHashMap<>();
-        for (City entry : entryList) {
-            sortedMap.put(entry.getStolica(), entry);
-        }
-
-        // Print the sorted map
-        System.out.println("Sorted map:");
-        for (Map.Entry<String, City> entry : sortedMap.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
+//        List<City> entryList = new ArrayList<>(cityMap.values());
+//
+//        // Sort the list using the comparator
+//        entryList.sort(worstTimezoneFitComparator(test));
+//
+//        Map<String, City> sortedMap = new LinkedHashMap<>();
+//        for (City entry : entryList) {
+//            sortedMap.put(entry.getStolica(), entry);
+//        }
+//
+//        // Print the sorted map
+//        System.out.println("Sorted map:");
+//        for (Map.Entry<String, City> entry : sortedMap.entrySet()) {
+//            System.out.println(entry.getKey() + ": " + entry.getValue());
+//        }
     }
 }
