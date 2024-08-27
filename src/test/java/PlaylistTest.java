@@ -1,6 +1,17 @@
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import pliki.Playlist;
 import pliki.Song;
+import pliki.DatabaseConnection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -97,4 +108,61 @@ public class PlaylistTest {
 
     }
 
+    //2b
+
+    //cos ten kuerwski beforeall nie dzialal
+    @BeforeAll
+    public static void openDatabase(){
+        DatabaseConnection.connect("C:\\Users\\Vilembraw\\IdeaProjects\\proj1\\src\\main\\java\\pliki\\songs.db","");
+    }
+
+    @Before
+    public void openDatabase1(){
+        DatabaseConnection.connect("C:\\Users\\Vilembraw\\IdeaProjects\\proj1\\src\\main\\java\\pliki\\songs.db","");
+    }
+
+    //2b
+    @Test
+    public void testRead(){
+//        DatabaseConnection.connect("C:\\Users\\Vilembraw\\IdeaProjects\\proj1\\src\\main\\java\\pliki\\songs.db","");
+
+        Optional<Song> testSong = Song.Peristence.read(1);
+        Song expected = new Song("The Beatles", "Hey Jude", 431);
+        assertEquals(expected,testSong.get());
+    }
+
+    //2c
+    @Test
+    public void testReadWrong(){
+
+        Optional<Song> testSong = Song.Peristence.read(1);
+        Song expected = new Song("The Beatles", "Hey Jude", 431);
+//        assertEquals(expected,testSong.get());
+        assertFalse(testSong.isPresent());
+    }
+
+    //2d
+    static Stream<Arguments> songDataProvider() {
+        return Stream.of(
+                Arguments.of(1, new Song("The Beatles", "Hey Jude", 431)),
+                Arguments.of(2, new Song("Thea Rolling Stones", "(I Can't Get No) Satisfaction", 224)),
+                Arguments.of(3, new Song("Led Zeppelin", "Stairway to Heaven", 482))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("songDataProvider")
+    public void testReadStream(int id, Song expected){
+        Optional<Song> testSong = Song.Peristence.read(id);
+        assertEquals(expected,testSong.get());
+    }
+
+
+
+    @After
+    public void closeDatabase(){
+        DatabaseConnection.disconnect("");
+    }
+
+    //2d
 }
