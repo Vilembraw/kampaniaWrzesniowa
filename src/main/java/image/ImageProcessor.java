@@ -67,4 +67,26 @@ public class ImageProcessor {
             threads[i].join();
         }
     }
+
+
+    void setBrightnessThreadsAmount(int value,int threadsCount) throws InterruptedException {
+        Thread[] threads;
+        threads = new Thread[threadsCount];
+        int chunk = bufferedImage.getHeight() / threadsCount;
+        for (int i = 0; i < threadsCount; i++) {
+            int begin = i * chunk;
+            int end;
+            if (i == threadsCount - 1) {
+                end = bufferedImage.getHeight();
+            } else {
+                end = (i + 1) * chunk;
+            }
+            threads[i] = new Thread(new BrightnessWorker(begin, end, value, bufferedImage));
+            threads[i].start();
+        }
+
+        for (int i = 0; i < threadsCount; i++) {
+            threads[i].join();
+        }
+    }
 }

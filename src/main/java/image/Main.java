@@ -21,6 +21,13 @@ public class Main {
                 System.out.println(endTime-startTime);
             }
 
+            {
+                long startTime = System.currentTimeMillis();
+                imageProcessor.setBrightnessThreadsAmount(100,10);
+                long endTime = System.currentTimeMillis();
+                System.out.println(endTime-startTime);
+            }
+
             imageProcessor.writeImage("obrazek.jpeg");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
