@@ -150,4 +150,104 @@ public class ImageProcessor {
             }
         }
     }
+
+
+    public int[] calculateChannelHistogram(int channel) {
+        //(0 dla czerwonego, 1 dla zielonego, 2 dla niebieskiego)
+        if (bufferedImage == null) {
+            System.out.println("Brak wczytanego obrazu.");
+            return null;
+        }
+
+        int[] histogram = new int[256];
+        int numThreads = Runtime.getRuntime().availableProcessors();
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        // Dzielenie obrazu na części i przetwarzanie ich w osobnych wątkach
+        int heightPerThread = bufferedImage.getHeight() / numThreads;
+        for (int i = 0; i < numThreads; i++) {
+            int startY = i * heightPerThread;
+            int endY = (i == numThreads - 1) ? bufferedImage.getHeight() : (i + 1) * heightPerThread;
+            Runnable task = new HistogramCalculationTask(channel, startY, endY, histogram);
+            executor.execute(task);
+        }
+
+        executor.shutdown();
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            System.out.println("Wątek został przerwany: " + e.getMessage());
+        }
+
+        return histogram;
+    }
+
+    // Klasa wewnętrzna reprezentująca zadanie obliczania histogramu dla wybranego kanału w jednym wątku
+    private class HistogramCalculationTask implements Runnable {
+        private final int channel;
+        private final int startY;
+        private final int endY;
+        private final int[] histogram;
+
+        public HistogramCalculationTask(int channel, int startY, int endY, int[] histogram) {
+            this.channel = channel;
+            this.startY = startY;
+            this.endY = endY;
+            this.histogram = histogram;
+        }
+
+        @Override
+        public void run() {
+            for (int y = startY; y < endY; y++) {
+                for (int x = 0; x < bufferedImage.getWidth(); x++) {
+                    int rgb = bufferedImage.getRGB(x, y);
+                    int color = (rgb >> (channel * 8)) & 0xFF; // Wybór kanału koloru
+                    synchronized (histogram) {
+                        histogram[color]++;
+                    }
+                }
+            }
+        }
+    }
+
+    // Metoda do generowania obrazu przedstawiającego wykres histogramu
+    public void generateHistogramImage(int[] histogram, String outputPath) {
+        if (histogram == null || histogram.length != 256) {
+            System.out.println("Niepoprawny histogram.");
+            return;
+        }
+
+        int width = 256; // Szerokość obrazu
+        int height = 200; // Wysokość obrazu
+        BufferedImage histogramImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = histogramImage.getGraphics();
+
+        // Wypełnienie tła na biało
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, width, height);
+
+        // Znalezienie maksymalnej wartości w histogramie
+        int maxCount = 0;
+        for (int count : histogram) {
+            maxCount = Math.max(maxCount, count);
+        }
+
+        // Rysowanie słupków na podstawie histogramu
+        graphics.setColor(Color.BLACK);
+        for (int i = 0; i < histogram.length; i++) {
+            int barHeight = (int) ((double) histogram[i] / maxCount * (height - 20)); // Wysokość słupka
+            int x = i;
+            int y = height - 10 - barHeight; // Górna krawędź słupka
+            graphics.drawLine(x, height - 10, x, y); // Linia pionowa
+        }
+
+        // Zapisanie obrazu histogramu do pliku
+        try {
+            File outputFile = new File(outputPath);
+            ImageIO.write(histogramImage, "png", outputFile);
+            System.out.println("Obraz histogramu został wygenerowany i zapisany pomyślnie.");
+        } catch (Exception e) {
+            System.out.println("Wystąpił błąd podczas zapisywania obrazu histogramu: " + e.getMessage());
+        }
+    }
 }

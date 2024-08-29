@@ -39,6 +39,25 @@ public class Main {
                 imageProcessor.writeImage("img\\obrazek4.jpg");
             }
 
+            {
+                int[] redHistogram = imageProcessor.calculateChannelHistogram(3);
+                // Wyświetlenie histogramu
+                if (redHistogram != null) {
+                    for (int i = 0; i < redHistogram.length; i++) {
+                        System.out.println("Wartość: " + i + ", Liczba pikseli: " + redHistogram[i]);
+                    }
+                }
+
+                ImageProcessor handler = new ImageProcessor();
+                handler.readImage("img.jpg");
+                int[] histogram = new int[256];
+                for (int i = 0; i < 256; i++) {
+                    histogram[i] = (int) (Math.random() * 500); // Losowe wartości do histogramu
+                }
+
+                handler.generateHistogramImage(histogram, "Histogram.png");
+            }
+
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
