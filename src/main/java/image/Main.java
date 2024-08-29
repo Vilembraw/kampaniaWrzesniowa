@@ -7,9 +7,22 @@ public class Main {
         try {
             ImageProcessor imageProcessor = new ImageProcessor();
             imageProcessor.readImage("img.jpg");
-            imageProcessor.setBrightness(50);
-            imageProcessor.writeImage("img1_old.jpg");
-        } catch (IOException e) {
+
+            {
+                long startTime = System.currentTimeMillis();
+                imageProcessor.setBrightness(100);
+                long endTime = System.currentTimeMillis();
+                System.out.println(endTime-startTime);
+            }
+            {
+                long startTime = System.currentTimeMillis();
+                imageProcessor.setBrightnessAllThreads(100);
+                long endTime = System.currentTimeMillis();
+                System.out.println(endTime-startTime);
+            }
+
+            imageProcessor.writeImage("obrazek.jpeg");
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
