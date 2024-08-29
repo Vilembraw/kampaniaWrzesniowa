@@ -13,12 +13,14 @@ public class Main {
                 imageProcessor.setBrightness(100);
                 long endTime = System.currentTimeMillis();
                 System.out.println(endTime-startTime);
+                imageProcessor.writeImage("img\\obrazek1.jpg");
             }
             {
                 long startTime = System.currentTimeMillis();
                 imageProcessor.setBrightnessAllThreads(100);
                 long endTime = System.currentTimeMillis();
                 System.out.println(endTime-startTime);
+                imageProcessor.writeImage("img\\obrazek2.jpg");
             }
 
             {
@@ -26,9 +28,18 @@ public class Main {
                 imageProcessor.setBrightnessThreadsAmount(100,10);
                 long endTime = System.currentTimeMillis();
                 System.out.println(endTime-startTime);
+                imageProcessor.writeImage("img\\obrazek3.jpg");
             }
 
-            imageProcessor.writeImage("obrazek.jpeg");
+            {
+                long startTime = System.currentTimeMillis();
+                imageProcessor.adjustBrightnessPoolThread(100);
+                long endTime = System.currentTimeMillis();
+                System.out.println(endTime-startTime);
+                imageProcessor.writeImage("img\\obrazek4.jpg");
+            }
+
+
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
