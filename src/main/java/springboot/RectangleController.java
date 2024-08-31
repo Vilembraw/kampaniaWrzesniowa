@@ -1,10 +1,7 @@
 package springboot;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,5 +60,21 @@ public class RectangleController {
         return sb.toString();
     }
 
+//    curl localhost:3001/get/1
+    @GetMapping("/get/{id}")
+    public Rectangle getRectangle(@PathVariable int id){
+        return listRect.get(id);
+    }
 
+//    curl -X PUT -H "Content-Type: application/json" -d "{\"x\":350, \"y\":270, \"width\":100, \"height\":100, \"color\":\"purple\"}" localhost:3001/put/1
+    @PutMapping("/put/{id}")
+    public void setRectangle(@PathVariable int id, @RequestBody Rectangle rectangle ){
+        listRect.set(id,rectangle);
+    }
+
+//    curl -X DELETE localhost:3001/delete/2
+    @DeleteMapping("/delete/{id}")
+    public void deleteRectangle(@PathVariable int id){
+        listRect.remove(id);
+    }
 }
