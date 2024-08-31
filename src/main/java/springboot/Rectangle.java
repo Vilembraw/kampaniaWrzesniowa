@@ -55,4 +55,6 @@ public class Rectangle {
     public void setColor(String color) {
         this.color = color;
     }
+
+
 }

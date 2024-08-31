@@ -2,6 +2,8 @@ package springboot;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -32,6 +34,11 @@ public class RectangleController {
         listRect.add(new Rectangle(20,10,30,50,"green"));
     }
 
+    @PostMapping("/addRect")
+    public void addRect(@RequestBody Rectangle rectangle){
+        listRect.add(rectangle);
+    }
+    //curl -X POST -H "Content-Type: application/json" -d "{\"x\":50, \"y\":70, \"width\":100, \"height\":100, \"color\":\"blue\"}" localhost:3001/addRect
     @GetMapping("/lista")
     public List<Rectangle> returnRec(){
         return listRect;
