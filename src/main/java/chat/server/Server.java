@@ -78,6 +78,11 @@ public class Server {
         }
     }
 
+    public List<String> serverUsersLogins(){
+        return clientMap.keySet().stream().toList();
+    }
+
+
 
     public static void main(String[] args) throws IOException {
         Server server = new Server();

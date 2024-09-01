@@ -42,15 +42,24 @@ public class Client implements Runnable {
         server.clientLeft(this);
     }
 
+
+    public void parseMessage(String message){
+        if(message.equals("/online")){
+            send(server.serverUsersLogins().toString());
+        }else{
+            String temp = this.getLogin() + ":  " + message;
+            server.broadcast(temp);
+        }
+    }
+
     @Override
     public void run() {
         try {
             this.authenticate();
             String message;
             while((message= bufferedReader.readLine()) != null){
-                String temp = this.getLogin() + ":  " + message;
-
-                server.broadcast(temp);
+                parseMessage(message);
+//                server.broadcast(temp);
             }
             this.leave();
         } catch (IOException e) {
