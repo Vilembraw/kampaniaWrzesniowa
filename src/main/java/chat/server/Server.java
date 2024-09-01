@@ -83,6 +83,15 @@ public class Server {
     }
 
 
+    public void whisper(String who, String toWhom, String message){
+        System.out.println(who + "sends " + toWhom+ " a "+ message);
+        for(Client client : clients){
+            if(client.getLogin().equals(toWhom)){
+                client.send(who + " whispers u: "+ message);
+            }
+
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         Server server = new Server();

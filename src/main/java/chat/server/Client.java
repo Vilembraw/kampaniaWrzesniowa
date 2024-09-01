@@ -46,6 +46,13 @@ public class Client implements Runnable {
     public void parseMessage(String message){
         if(message.equals("/online")){
             send(server.serverUsersLogins().toString());
+        }
+        else if(message.startsWith("/w")){
+            String[] parts = message.split(" ");
+            String target = parts[1];
+            String privateMessage = parts[2];
+            server.whisper(this.login,target,privateMessage);
+
         }else{
             String temp = this.getLogin() + ":  " + message;
             server.broadcast(temp);
