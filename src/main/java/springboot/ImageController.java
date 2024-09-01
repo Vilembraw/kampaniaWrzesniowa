@@ -77,9 +77,13 @@ public class ImageController {
         byte[] imageByte = bos.toByteArray();
         return ResponseEntity.ok(imageByte);
 
-
+//        http://localhost:3001/image/setbrightness?base64code=iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAIAAABLixI0AAAAo0lEQVR4nGI5YB7KgAQiT1Yhc6dtQ%2BGemCCPzP3lw43MZWKgHhgJZjGuOXsOmc8ucg2ZWxCIEvaBRhORuXfPtNLKXSPBLEZNTUZk%2FnkXFmSuxszXyNylb9tQHCIdTSt3jQSzWD5NTUDmm%2F1IRubuP%2FkCmbtz4h9kbsznS7Ry10gwi3G%2FWQcyv01LEkV6yUJk7r3pnchc%2B1P5tHLXSDALEAAA%2F%2F8uqyZWk4UlWgAAAABJRU5ErkJggg%3D%3D&brightness=50
 
     }
+
+
+
+
 
 
 }
