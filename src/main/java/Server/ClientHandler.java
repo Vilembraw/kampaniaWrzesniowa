@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -86,8 +87,10 @@ public class ClientHandler {
 
     @PostMapping("/pixel")
     public ResponseEntity<String> pixel(@RequestBody Pixel pixel){
+        Client wantedClient = null;
         for(Client client : clients){
             if(pixel.getId() == client.getToken()){
+                wantedClient = client;
                 if(client.isExpired()){
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("token is not active");
                 }
@@ -98,10 +101,39 @@ public class ClientHandler {
 
         }
 
+        try {
+            String path = "pixele.db";
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:"+path);
+            String sql = "INSERT INTO entry (token, x, y, color, timestamp) VALUES(?, ?, ?, ?, ?)";
+            PreparedStatement statement =  connection.prepareStatement(sql);
+            statement.setInt(1,pixel.getId());
+            statement.setInt(2,pixel.getX());
+            statement.setInt(3,pixel.getY());
+            statement.setString(4,pixel.getHexColor());
+            statement.setString(5,wantedClient.getRegTime().toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-       return ResponseEntity.status(HttpStatus.OK).body("Ok");
+        return ResponseEntity.status(HttpStatus.OK).body("Ok");
     }
 
+
+
+    @GetMapping("/tabela")
+    public void createTable(){
+        try {
+            String path = "pixele.db";
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:"+path);
+            String sql = "CREATE TABLE IF NOT EXISTS entry (token TEXT NOT NULL, x INTEGER NOT NULL, y INTEGER NOT NULL, color TEXT NOT NULL, timestamp TEXT NOT NULL)";
+            PreparedStatement statement =  connection.prepareStatement(sql);
+            statement.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
