@@ -1,5 +1,7 @@
 package client;
 
+import java.io.*;
+import java.net.Socket;
 import java.time.LocalDateTime;
 
 public class Client {
@@ -41,4 +43,15 @@ public class Client {
     }
 
 
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 2135);
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String userInput;
+        while((userInput = reader.readLine()) != null){
+            writer.write(userInput + "\n");
+            writer.flush();
+        }
+    }
 }
