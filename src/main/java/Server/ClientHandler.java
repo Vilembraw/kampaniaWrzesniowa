@@ -57,7 +57,7 @@ public class ClientHandler {
     @GetMapping("/image")
     public String showImage(Model model){
         try {
-            BufferedImage bufferedImage = generateBlackImage();
+            BufferedImage bufferedImage = generateImageDB();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", baos);
             byte[] imageBytes = baos.toByteArray();
@@ -135,5 +135,34 @@ public class ClientHandler {
         }
     }
 
+    public BufferedImage generateImageDB(){
+        List<Pixel> pixels = new ArrayList<>();
+        try {
+            String path = "pixele.db";
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:"+path);
+            String sql = "SELECT token, x, y, color FROM entry ORDER BY timestamp";
+            PreparedStatement statement =  connection.prepareStatement(sql);
+            try (ResultSet resultSet = statement.executeQuery()){
+                while (resultSet.next()){
+                    Pixel pixel = new Pixel(resultSet.getInt("token"),resultSet.getInt("x"),resultSet.getInt("y"),resultSet.getString("color"));
+                    pixels.add(pixel);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
+        BufferedImage bufferedImage = generateBlackImage();
+
+        for(Pixel pixel : pixels){
+            int newColor = pixel.parseColor();
+            int red = (newColor >> 16) & 0xFF; // przesunięcie o 16 bitów i maskowanie
+            int green = (newColor >> 8) & 0xFF; // przesunięcie o 8 bitów i maskowanie
+            int blue = newColor & 0xFF; // maskowanie bez przesunięcia
+            Color color = new Color(red,green,blue);
+            bufferedImage.setRGB(pixel.getX(),pixel.getY(),color.getRGB());
+        }
+
+        return bufferedImage;
+    }
 }
