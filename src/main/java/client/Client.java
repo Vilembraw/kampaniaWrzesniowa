@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 public class Client {
     private int token;
     LocalDateTime regTime;
+    boolean active;
 
-    boolean active = false;
+
+
 
     public boolean isActive() {
         return active;
@@ -19,6 +21,7 @@ public class Client {
     public Client(int token, LocalDateTime regTime) {
         this.token = token;
         this.regTime = regTime;
+        this.active = false;
     }
 
     public int getToken() {
@@ -32,4 +35,10 @@ public class Client {
     public LocalDateTime getRegTime() {
         return regTime;
     }
+
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(regTime.plusMinutes(5));
+    }
+
+
 }

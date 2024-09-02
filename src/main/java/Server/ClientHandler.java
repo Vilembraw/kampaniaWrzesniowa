@@ -3,6 +3,8 @@ package Server;
 
 
 import client.Client;
+import client.Pixel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -43,6 +44,11 @@ public class ClientHandler {
     @GetMapping("/tokens")
     @ResponseBody
     public List<Client> getRegTokens(){
+        for(Client client : clients){
+            if(client.isExpired()){
+                client.setActive(false);
+            }
+        }
         return clients;
     }
 
@@ -76,4 +82,26 @@ public class ClientHandler {
         }
         return bufferedImage;
     }
+
+
+    @PostMapping("/pixel")
+    public ResponseEntity<String> pixel(@RequestBody Pixel pixel){
+        for(Client client : clients){
+            if(pixel.getId() == client.getToken()){
+                if(client.isExpired()){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("token is not active");
+                }
+            }
+        }
+        if(pixel.getX() > 512 || pixel.getX() < 0 || pixel.getY() > 512 || pixel.getY() < 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("x y incorrect");
+
+        }
+
+
+       return ResponseEntity.status(HttpStatus.OK).body("Ok");
+    }
+
+
+
 }
