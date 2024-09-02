@@ -49,7 +49,7 @@ public class ServerApplication {
 			}
 
 			while((message = bufferedReader.readLine()) != null ){
-				System.out.println(message);
+				parseMessage(message);
 			}
 
 		} catch (IOException e) {
@@ -59,6 +59,16 @@ public class ServerApplication {
 
 	}
 
+	public String parseMessage(String message){
 
+		if(message.startsWith("/ban"))
+		{
+			String[] parts = message.split(" ",2);
+			int tokenId = Integer.parseInt(parts[1]);
+			String result = String.valueOf(ClientHandler.ban(tokenId));
+
+		}
+		return message;
+	}
 
 }

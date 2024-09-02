@@ -25,7 +25,7 @@ import java.util.List;
 public class ClientHandler {
 
     private int tokenCounter = 1;
-    private List<Client> clients = new ArrayList<>();
+    private static List<Client> clients = new ArrayList<>();
 
 
 
@@ -164,5 +164,27 @@ public class ClientHandler {
         }
 
         return bufferedImage;
+    }
+
+    public static int ban(int tokenId){
+        for(Client client : clients){
+            if(client.getToken() == tokenId){
+                client.setActive(false);
+                clients.remove(client);
+                try {
+                    String path = "pixele.db";
+                    Connection connection = DriverManager.getConnection("jdbc:sqlite:"+path);
+                    String sql = "DELETE FROM entry WHERE token=?";
+                    PreparedStatement statement =  connection.prepareStatement(sql);
+                    statement.setInt(1,tokenId);
+                    int rowsDeleted = statement.executeUpdate();
+                    System.out.println(rowsDeleted);
+                    return rowsDeleted;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return 0;
     }
 }
