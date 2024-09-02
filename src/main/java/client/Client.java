@@ -6,6 +6,15 @@ public class Client {
     private int token;
     LocalDateTime regTime;
 
+    boolean active = false;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     public Client(int token, LocalDateTime regTime) {
         this.token = token;
