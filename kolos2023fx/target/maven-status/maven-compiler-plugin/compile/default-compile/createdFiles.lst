@@ -1,0 +1,5 @@
+Server\ServerApp.class
+module-info.class
+Server\ServerController.class
+Client\Client.class
+Server\ClientHandler.class
